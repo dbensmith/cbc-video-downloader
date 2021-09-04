@@ -14,5 +14,6 @@ Built on PowerShell and designed to run on Windows systems.
 * Run ```./Invoke-YouTubeDownloader-CBC.ps1``` and watch it go
 
 # Credit
-The makers of youtube-dl: https://github.com/ytdl-org/youtube-dl
-The makers of ffmpeg: 
+* The makers of [youtube-dl](https://github.com/ytdl-org/youtube-dl)
+* The makers of [ffmpeg](https://www.ffmpeg.org/)
+* The [CBC](https://www.cbc.ca/) for their excellent coverage of sporting events
