@@ -5,7 +5,7 @@ Built on PowerShell and designed to run on Windows systems.
 
 Throttled to three videos at a time to respect CBC's bandwidth.
 
-## How to use this
+# How to use this
 ### Invoke-YouTubeDownloader-CBC.ps1
 * Clone this repo locally into a folder of your choice
 * If not installed, download and install PowerShell 7 from the Microsoft Store or from the [Microsoft GitHub](https://github.com/PowerShell/PowerShell)
