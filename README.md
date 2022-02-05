@@ -3,7 +3,7 @@ Parses a list of given CBC video URLs and downloads the video files as MP4. Down
 
 A separate script takes a single CBC media ID as input and downloads a single file.
 
-Tested to work on (most) video content from the Tokyo 2020 Olympics.
+Tested to work on (most) video content from the Tokyo 2020 Olympics and the Beijing 2022 Olympics.
 
 ## Prerequisites
 * PowerShell 7: install from the Microsoft Store or [PowerShell on GitHub](https://github.com/PowerShell/PowerShell)
