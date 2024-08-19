@@ -8,7 +8,7 @@ Tested to work on (most) video content from the Tokyo 2020 Olympics and the Beij
 ## Prerequisites
 * PowerShell 7: install from the Microsoft Store or [PowerShell on GitHub](https://github.com/PowerShell/PowerShell)
 * A copy of the [Windows binary of FFmpeg](https://ffmpeg.org/download.html#build-windows)
-* A copy of the [Windows binary of youtube-dl](https://yt-dl.org/latest/youtube-dl.exe) 
+* A copy of the [Windows binary of youtube-dl (nightly build)](https://github.com/ytdl-org/ytdl-nightly/releases/) 
 
 ## How to use this
 #### Preparation
