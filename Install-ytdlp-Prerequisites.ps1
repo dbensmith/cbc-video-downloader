@@ -1,21 +1,24 @@
 # Define your install path
-$DestinationPath = "$(Get-Location)"
+[CmdletBinding()]
+param (
+    [Parameter(Mandatory=$false)][String]$DestinationPath = "$PSScriptRoot"
+)
 
 If (!(Test-Path $DestinationPath)) {
     New-Item -Path $DestinationPath -ItemType Directory -Force
 }
 
 # Install YouTube Downloader (nightly build)
-function Install-YTDL {
-    $GitHubOrgRepo = "ytdl-org/ytdl-nightly"
-    $GitHubFile = "youtube-dl.exe"
+function Install-ytdlp {
+    $GitHubOrgRepo = "yt-dlp/yt-dlp"
+    $GitHubFile = "yt-dlp.exe"
     $OutFile = "$DestinationPath\$GitHubFile"
     Invoke-WebRequest -Uri https://github.com/$GitHubOrgRepo/releases/latest/download/$GitHubFile -OutFile $OutFile
     Write-Output "Downloaded $GitHubFile to $OutFile."
 }
 
 # Install ffmpeg (x64)
-function Install-FFMPEG {
+function Install-ffmpeg {
     $GitHubOrgRepo = "BtbN/FFmpeg-Builds"
     $GitHubRelease = "ffmpeg-master-latest-win64-gpl"
     $GitHubFile = "$GitHubRelease.zip"
@@ -45,5 +48,5 @@ function Install-FFMPEG {
 }
 
 # Run the defined functions
-Install-YTDL
-Install-FFMPEG
+Install-ytdlp
+Install-ffmpeg
