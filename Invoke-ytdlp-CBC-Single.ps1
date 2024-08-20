@@ -5,4 +5,4 @@
 param (
     [Parameter(mandatory=$true)][string]$URL
 )
-Start-Process -NoNewWindow -FilePath .\yt-dlp.exe -ArgumentList "-o `"%(series)s/%(tags.0)s/%(upload_date>%Y-%m-%d)s - %(title)s [%(id)s].%(ext)s`" $URL"
+Start-Process -NoNewWindow -FilePath $PSScriptRoot\yt-dlp.exe -ArgumentList "-o `"%(series)s/%(tags.0)s/%(upload_date>%Y-%m-%d)s - %(title)s [%(id)s].%(ext)s`" $URL"
