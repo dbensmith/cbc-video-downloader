@@ -33,7 +33,10 @@ function Install-ffmpeg {
 
         # Extract the specified files
         foreach ($File in $FilesToExtract) {
-            $Entry = $Zip.Entries | Where-Object { $_.FullName -eq "$GitHubRelease/bin/$File" }
+            $Entry = $Zip.GetEntry("$GitHubRelease/bin/$File")
+            if (-not $Entry) {
+                $Entry = $Zip.Entries | Where-Object { $_.FullName -eq "$GitHubRelease/bin/$File" }
+            }
             if ($Entry) {
                 [System.IO.Compression.ZipFileExtensions]::ExtractToFile($Entry, "$DestinationPath\$File", $true)
                 Write-Output "Extracted $File to $destinationPath\$File."
