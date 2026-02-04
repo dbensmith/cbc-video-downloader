@@ -1,3 +1,4 @@
+#Requires -Version 7.0
 # Single CBC Video download script
 # Provide the CBC video player URL and the script will download it for you and organize it into a folder
 

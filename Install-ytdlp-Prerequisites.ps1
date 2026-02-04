@@ -1,3 +1,4 @@
+#Requires -Version 7.0
 # Define your install path
 [CmdletBinding()]
 param (
@@ -32,10 +33,16 @@ function Install-ffmpeg {
         $Zip = [System.IO.Compression.ZipFile]::OpenRead($OutFile)
 
         # Extract the specified files
+        $EntriesHash = $null
         foreach ($File in $FilesToExtract) {
-            $Entry = $Zip.GetEntry("$GitHubRelease/bin/$File")
+            $EntryPath = "$GitHubRelease/bin/$File"
+            $Entry = $Zip.GetEntry($EntryPath)
             if (-not $Entry) {
-                $Entry = $Zip.Entries | Where-Object { $_.FullName -eq "$GitHubRelease/bin/$File" }
+                if (-not $EntriesHash) {
+                    $EntriesHash = @{}
+                    $Zip.Entries | ForEach-Object { $EntriesHash[$_.FullName] = $_ }
+                }
+                $Entry = $EntriesHash[$EntryPath]
             }
             if ($Entry) {
                 [System.IO.Compression.ZipFileExtensions]::ExtractToFile($Entry, "$DestinationPath\$File", $true)
