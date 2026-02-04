@@ -9,7 +9,7 @@ Tested to work on (most) video content from the Tokyo 2020 Olympics, the Beijing
 ## Prerequisites
 
 * Microsoft Windows
-* PowerShell 7 or higher; install from the Microsoft Store, WinGet (`winget install Microsoft.PowerShell`), or [PowerShell on GitHub](https://github.com/PowerShell/PowerShell).
+* PowerShell 7.0 or higher; install from the Microsoft Store, WinGet (`winget install Microsoft.PowerShell`), or [PowerShell on GitHub](https://github.com/PowerShell/PowerShell).
 * The [Windows binary of FFmpeg](https://ffmpeg.org/download.html#build-windows).
 * The [Windows binary of yt-dlp](https://github.com/yt-dlp/yt-dlp/releases/).
 

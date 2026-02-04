@@ -1,8 +1,8 @@
+#Requires -Version 7.0
 <#
 CBC Video batch download script
 Simple script to download an imported list of CBC video links via yt-dlp
 #>
-#Requires -Version 7
 
 [CmdletBinding()]
 param (

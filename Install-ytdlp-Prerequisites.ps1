@@ -1,3 +1,4 @@
+#Requires -Version 7.0
 # Define your install path
 [CmdletBinding()]
 param (
