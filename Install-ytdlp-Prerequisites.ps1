@@ -41,7 +41,9 @@ function Install-ffmpeg {
                 if (-not $EntriesHash) {
                     $EntriesHash = @{}
                     foreach ($ZipEntry in $Zip.Entries) {
-                        $EntriesHash[$ZipEntry.FullName] = $ZipEntry
+                        if (-not $EntriesHash.ContainsKey($ZipEntry.FullName)) {
+                            $EntriesHash[$ZipEntry.FullName] = $ZipEntry
+                        }
                     }
                 }
                 $Entry = $EntriesHash[$EntryPath]
