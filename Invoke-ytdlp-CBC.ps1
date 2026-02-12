@@ -6,7 +6,14 @@ Simple script to download an imported list of CBC video links via yt-dlp
 
 [CmdletBinding()]
 param (
-    [Parameter(mandatory=$false)][String]$URLList = "$PSScriptRoot\URLList.txt"
+    [Parameter(mandatory=$false)]
+    [ValidateScript({
+        if (-not (Test-Path $_ -PathType Leaf)) {
+            throw "File '$_' not found or is not a file."
+        }
+        return $true
+    })]
+    [String]$URLList = "$PSScriptRoot\URLList.txt"
 )
 
 Write-Output "$PSSCriptRoot"
