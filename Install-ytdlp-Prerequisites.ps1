@@ -11,7 +11,7 @@ If (!(Test-Path $DestinationPath)) {
 
 # Install YouTube Downloader (nightly build)
 function Install-ytdlp {
-    $GitHubOrgRepo = "yt-dlp/yt-dlp"
+    $GitHubOrgRepo = "yt-dlp/yt-dlp-nightly-builds"
     $GitHubFile = "yt-dlp.exe"
     $OutFile = "$DestinationPath\$GitHubFile"
     Invoke-WebRequest -Uri https://github.com/$GitHubOrgRepo/releases/latest/download/$GitHubFile -OutFile $OutFile
