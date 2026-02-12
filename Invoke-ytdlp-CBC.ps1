@@ -6,7 +6,7 @@ Simple script to download an imported list of CBC video links via yt-dlp
 
 [CmdletBinding()]
 param (
-    [Parameter(mandatory=$false)][String]$URLList
+    [Parameter(mandatory=$false)][String]$URLList = "$PSScriptRoot\URLList.txt"
 )
 
 Write-Output "$PSSCriptRoot"
