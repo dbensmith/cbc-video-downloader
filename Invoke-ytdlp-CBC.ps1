@@ -13,13 +13,16 @@ param (
         }
         return $true
     })]
-    [String]$URLList = "$PSScriptRoot\URLList.txt"
+    [String]$URLList = Join-Path $PSScriptRoot "URLList.txt"
 )
 
-Write-Output "$PSSCriptRoot"
+Write-Output "$PSScriptRoot"
+
+# Determine the executable name based on the platform
+$ytDlpExe = if ($IsWindows) { "yt-dlp.exe" } else { "yt-dlp" }
+$ytDlpPath = Join-Path $PSScriptRoot $ytDlpExe
 
 # Given a CBC Player link (capture from URL bar), download files and organize by date:
-$VideoLinkFile = Get-Content (Get-Item $URLList)
-$VideoLinkFile | ForEach-Object -Parallel {
-    & "$($using:PSScriptRoot)\yt-dlp.exe" -o "%(series)s/%(tags.0)s/%(upload_date>%Y-%m-%d)s - %(title)s [%(id)s].%(ext)s" $_
+Get-Content $URLList | ForEach-Object -Parallel {
+    & $using:ytDlpPath -o "%(series)s/%(tags.0)s/%(upload_date>%Y-%m-%d)s - %(title)s [%(id)s].%(ext)s" $_
 } -ThrottleLimit 3
