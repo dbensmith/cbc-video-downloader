@@ -5,6 +5,9 @@ param (
     [Parameter(Mandatory=$false)][String]$DestinationPath = "$PSScriptRoot"
 )
 
+# Disable progress bar to improve download speeds with Invoke-WebRequest
+$ProgressPreference = 'SilentlyContinue'
+
 If (!(Test-Path $DestinationPath)) {
     New-Item -Path $DestinationPath -ItemType Directory -Force
 }
