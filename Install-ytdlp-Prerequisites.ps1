@@ -13,8 +13,14 @@ If (!(Test-Path $DestinationPath)) {
 function Install-ytdlp {
     $GitHubOrgRepo = "yt-dlp/yt-dlp-nightly-builds"
     $GitHubFile = "yt-dlp.exe"
-    $OutFile = "$DestinationPath\$GitHubFile"
-    Invoke-WebRequest -Uri https://github.com/$GitHubOrgRepo/releases/latest/download/$GitHubFile -OutFile $OutFile
+    $OutFile = Join-Path $DestinationPath $GitHubFile
+
+    if (Test-Path $OutFile) {
+        Write-Output "$GitHubFile already exists at $OutFile. Skipping download."
+        return
+    }
+
+    Invoke-WebRequest -Uri "https://github.com/$GitHubOrgRepo/releases/latest/download/$GitHubFile" -OutFile $OutFile
     Write-Output "Downloaded $GitHubFile to $OutFile."
 }
 
@@ -23,9 +29,18 @@ function Install-ffmpeg {
     $GitHubOrgRepo = "BtbN/FFmpeg-Builds"
     $GitHubRelease = "ffmpeg-master-latest-win64-gpl"
     $GitHubFile = "$GitHubRelease.zip"
-    $OutFile = "$DestinationPath\$GitHubFile"
+    $OutFile = Join-Path $DestinationPath $GitHubFile
     $FilesToExtract = @("ffmpeg.exe", "ffplay.exe", "ffprobe.exe")
-    Invoke-WebRequest -Uri https://github.com/$GitHubOrgRepo/releases/latest/download/$GitHubFile -OutFile $OutFile
+
+    # Check if all required binaries already exist
+    $missingFiles = $FilesToExtract | Where-Object { -not (Test-Path (Join-Path $DestinationPath $_)) }
+
+    if (-not $missingFiles) {
+        Write-Output "All FFmpeg binaries already exist in $DestinationPath. Skipping download and extraction."
+        return
+    }
+
+    Invoke-WebRequest -Uri "https://github.com/$GitHubOrgRepo/releases/latest/download/$GitHubFile" -OutFile $OutFile
     if (Test-Path $OutFile) {
         # Load the .NET assembly for compression
         Add-Type -AssemblyName System.IO.Compression.FileSystem
@@ -49,8 +64,9 @@ function Install-ffmpeg {
                 $Entry = $EntriesHash[$EntryPath]
             }
             if ($Entry) {
-                [System.IO.Compression.ZipFileExtensions]::ExtractToFile($Entry, "$DestinationPath\$File", $true)
-                Write-Output "Extracted $File to $destinationPath\$File."
+                $TargetPath = Join-Path $DestinationPath $File
+                [System.IO.Compression.ZipFileExtensions]::ExtractToFile($Entry, $TargetPath, $true)
+                Write-Output "Extracted $File to $TargetPath."
             } else {
                 Write-Output "$File not found in $OutFile."
             }
