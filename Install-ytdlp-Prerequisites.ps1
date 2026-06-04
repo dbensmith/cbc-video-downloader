@@ -8,7 +8,7 @@ param (
 # Disable progress bar to improve download speeds with Invoke-WebRequest
 $ProgressPreference = 'SilentlyContinue'
 
-If (!(Test-Path $DestinationPath)) {
+If (!(Test-Path -LiteralPath $DestinationPath)) {
     New-Item -Path $DestinationPath -ItemType Directory -Force
 }
 
@@ -19,7 +19,7 @@ function Install-ytdlp {
     $GitHubFile = "yt-dlp.exe"
     $OutFile = Join-Path $DestinationPath $GitHubFile
 
-    if (Test-Path $OutFile) {
+    if (Test-Path -LiteralPath $OutFile) {
         Write-Output "$GitHubFile already exists at $OutFile. Skipping download."
         return
     }
@@ -46,7 +46,7 @@ function Install-ffmpeg {
     }
 
     Invoke-WebRequest -Uri "https://github.com/$GitHubOrgRepo/releases/latest/download/$GitHubFile" -OutFile $OutFile
-    if (Test-Path $OutFile) {
+    if (Test-Path -LiteralPath $OutFile) {
         # Load the .NET assembly for compression
         Add-Type -AssemblyName System.IO.Compression.FileSystem
         # Open the zip file
