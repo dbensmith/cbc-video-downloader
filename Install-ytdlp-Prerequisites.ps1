@@ -36,7 +36,7 @@ function Install-ffmpeg {
     $FilesToExtract = @("ffmpeg.exe", "ffplay.exe", "ffprobe.exe")
 
     # Check if all required binaries already exist
-    $missingFiles = $FilesToExtract | Where-Object { -not (Test-Path (Join-Path $DestinationPath $_)) }
+    $missingFiles = $FilesToExtract.Where({ -not (Test-Path (Join-Path $DestinationPath $_)) })
 
     if (-not $missingFiles) {
         Write-Output "All FFmpeg binaries already exist in $DestinationPath. Skipping download and extraction."
