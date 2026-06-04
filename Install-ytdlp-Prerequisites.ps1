@@ -14,6 +14,7 @@ If (!(Test-Path $DestinationPath)) {
 
 # Install YouTube Downloader (nightly build)
 function Install-ytdlp {
+    param($DestinationPath)
     $GitHubOrgRepo = "yt-dlp/yt-dlp-nightly-builds"
     $GitHubFile = "yt-dlp.exe"
     $OutFile = Join-Path $DestinationPath $GitHubFile
@@ -29,6 +30,7 @@ function Install-ytdlp {
 
 # Install ffmpeg (x64)
 function Install-ffmpeg {
+    param($DestinationPath)
     $GitHubOrgRepo = "BtbN/FFmpeg-Builds"
     $GitHubRelease = "ffmpeg-master-latest-win64-gpl"
     $GitHubFile = "$GitHubRelease.zip"
@@ -80,6 +82,19 @@ function Install-ffmpeg {
     }
 }
 
-# Run the defined functions
-Install-ytdlp
-Install-ffmpeg
+# Run the defined functions in parallel
+$ytdlpDef = ${function:Install-ytdlp}.ToString()
+$ffmpegDef = ${function:Install-ffmpeg}.ToString()
+
+"ytdlp", "ffmpeg" | ForEach-Object -Parallel {
+    $DestinationPath = $using:DestinationPath
+    $ProgressPreference = 'SilentlyContinue'
+    if ($_ -eq "ytdlp") {
+        $sb = [scriptblock]::Create($using:ytdlpDef)
+        & $sb $DestinationPath
+    }
+    else {
+        $sb = [scriptblock]::Create($using:ffmpegDef)
+        & $sb $DestinationPath
+    }
+}
